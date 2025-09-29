@@ -111,4 +111,9 @@ h1{
 }
 @keyframes floatUp{ to{ transform:translateY(-110vh) rotate(360deg); opacity:0 } }
 
-body { cursor: url('https://cur.cursors-4u.net/love/lov-2/lov118.ani'), auto; }
+/* Chrome/Edge: static heart cursor (.cur) */
+body { cursor: url('https://cur.cursors-4u.net/love/lov-2/lov120.cur'), auto; }
+
+/* Safari/Mac fallback: PNG heart (hotspot centered at 36,36) */
+body { cursor: url('https://cdnjs.cloudflare.com/ajax/libs/twemoji/14.0.2/72x72/2764.png') 36 36, auto; }
+
