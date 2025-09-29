@@ -42,24 +42,33 @@ if (musicBtn && player) {
 
 // ---------- Count-up timer ----------
 // CHANGE THIS to your real start date/time:
+// ---------- Timer since March 30, 2025 ----------
 const startDate = new Date('2025-03-30T00:00:00');
 const timerEl = document.getElementById('timer');
 
-function pad(n){ return String(n).padStart(2,'0'); }
 function updateTimer() {
   if (!timerEl) return;
   const now = new Date();
-  let diff = Math.max(0, Math.floor((now - startDate) / 1000)); // seconds
 
-  const days = Math.floor(diff / 86400); diff %= 86400;
-  const hours = Math.floor(diff / 3600); diff %= 3600;
-  const mins = Math.floor(diff / 60);
-  const secs = diff % 60;
+  // months difference
+  let months = (now.getFullYear() - startDate.getFullYear()) * 12 +
+               (now.getMonth() - startDate.getMonth());
 
-  timerEl.textContent = `${days} days • ${pad(hours)}h ${pad(mins)}m ${pad(secs)}s`;
+  // days difference
+  let days = now.getDate() - startDate.getDate();
+  if (days < 0) {
+    // adjust if the current day is earlier than the start day
+    months--;
+    const prevMonth = new Date(now.getFullYear(), now.getMonth(), 0); // last day of prev month
+    days += prevMonth.getDate();
+  }
+
+  timerEl.textContent = `${months} months, ${days} days`;
 }
+
 updateTimer();
-setInterval(updateTimer, 1000);
+setInterval(updateTimer, 1000 * 60 * 60); // update every hour (no need every second)
+
 
 // ---------- Heart trail cursor ----------
 document.addEventListener('mousemove', (e) => {
