@@ -42,7 +42,7 @@ if (musicBtn && player) {
 
 // ---------- Count-up timer ----------
 // CHANGE THIS to your real start date/time:
-const startDate = new Date('2025-03-03T00:00:00');
+const startDate = new Date('2025-03-30T00:00:00');
 const timerEl = document.getElementById('timer');
 
 function pad(n){ return String(n).padStart(2,'0'); }
