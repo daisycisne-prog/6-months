@@ -61,3 +61,25 @@ function updateTimer() {
 updateTimer();
 setInterval(updateTimer, 1000);
 
+// ---------- Heart trail cursor ----------
+document.addEventListener('mousemove', (e) => {
+  const heart = document.createElement('span');
+  heart.textContent = '💖';
+  heart.style.position = 'fixed';
+  heart.style.left = e.pageX + 'px';
+  heart.style.top = e.pageY + 'px';
+  heart.style.pointerEvents = 'none';
+  heart.style.fontSize = Math.random() * 18 + 12 + 'px';
+  heart.style.opacity = 1;
+  heart.style.transition = 'transform 1s ease, opacity 1s ease';
+  document.body.appendChild(heart);
+
+  // force reflow so transition works
+  heart.getBoundingClientRect();
+
+  heart.style.transform = `translateY(-40px) scale(0.6) rotate(${Math.random()*90-45}deg)`;
+  heart.style.opacity = 0;
+
+  setTimeout(() => heart.remove(), 1000);
+});
+
