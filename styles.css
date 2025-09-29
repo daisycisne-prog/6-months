@@ -1,0 +1,113 @@
+:root{
+  --pink1:#ffe0f0; --pink2:#ffc2e0; --lpink:#ffe6f2;
+  --hot:#ff3b9a; --ink:#a21662; --white:#fff;
+}
+
+*{box-sizing:border-box}
+html,body{height:100%;margin:0}
+body{
+  font-family:'Pacifico',cursive;
+  background:radial-gradient(ellipse at top,var(--pink2),var(--pink1));
+  display:grid; place-items:center;
+  overflow:hidden; /* keep hearts inside */
+}
+
+/* Main card (centered, fixed width) */
+.card{
+  background:var(--white);
+  width:min(92vw, 900px);
+  padding:2.25rem 2.5rem;
+  border-radius:22px;
+  box-shadow:0 18px 40px rgba(255,59,154,.25);
+  position:relative; z-index:2;
+}
+h1{
+  color:var(--hot);
+  font-size:clamp(1.8rem,4.5vw,3rem);
+  margin:0 0 1.25rem;
+  text-align:center;
+}
+
+/* Two-column layout: photo left, message right */
+.content-grid{
+  display:grid;
+  grid-template-columns:minmax(220px, 1fr) minmax(260px, 1fr);
+  gap:22px;
+  align-items:start;
+  justify-items:center;   /* center each column */
+  margin-bottom:18px;
+}
+@media (max-width:720px){
+  .content-grid{
+    grid-template-columns:1fr;
+    justify-items:stretch;
+  }
+}
+
+/* Photo constraints */
+.media-wrap{ width:100%; display:grid; place-items:center; }
+.hero-media{
+  width:100%;              /* fill its column */
+  max-width:360px;         /* never exceed this */
+  aspect-ratio:4/5;        /* nice portrait shape */
+  object-fit:cover;        /* crop instead of stretch */
+  border-radius:16px;
+  box-shadow:0 10px 24px rgba(0,0,0,.18);
+}
+
+/* Right message card (light pink, fades in) */
+.message-card{
+  width:100%;
+  background:var(--lpink);
+  border:2px solid #ffb6d9;
+  border-radius:16px;
+  padding:1rem 1.25rem;
+  box-shadow:0 10px 24px rgba(255,59,154,.15);
+  text-align:left;
+  opacity:0; animation:fadeIn .8s ease .15s forwards;
+}
+.message-card h2{
+  color:var(--hot); margin:0 0 10px; font-size:1.4rem;
+}
+.message-body{
+  color:var(--hot);
+  font-family:ui-rounded, system-ui, -apple-system, "Segoe UI", sans-serif;
+  font-weight:500; line-height:1.5;
+  max-height:360px; overflow:auto; padding-right:6px;
+}
+.message-body p{ margin:0 0 10px; }
+@keyframes fadeIn{ from{opacity:0; transform:translateY(10px)} to{opacity:1; transform:none} }
+
+/* Controls (button + timer) */
+.controls{
+  display:grid; grid-auto-flow:column; grid-auto-columns:max-content;
+  gap:14px; justify-content:center; align-items:center; margin-top:6px;
+}
+@media (max-width:520px){ .controls{ grid-auto-flow:row } }
+.btn{
+  font-family:inherit; font-size:1.05rem; padding:.7rem 1.1rem;
+  border:none; border-radius:999px; color:#fff;
+  background:linear-gradient(135deg,#ff5bb0,#ff3b9a);
+  cursor:pointer; box-shadow:0 10px 20px rgba(255,59,154,.35);
+  transition:transform .06s, filter .2s;
+}
+.btn:hover{ filter:brightness(1.05) }
+.btn:active{ transform:translateY(1px) }
+.since-label{ margin:0; color:#d42f83; font-size:1.05rem }
+.timer-wrap{ display:grid; gap:6px; justify-items:center }
+.timer{
+  font-family:ui-rounded, system-ui, -apple-system, "Segoe UI", sans-serif;
+  font-weight:600; letter-spacing:.3px; color:var(--ink);
+  background:#ffe5f2; padding:.55rem .9rem; border-radius:12px;
+  box-shadow:inset 0 0 0 1px rgba(255,59,154,.15);
+}
+
+/* Hearts background */
+#hearts-layer{ position:fixed; inset:0; pointer-events:none; z-index:1 }
+.heart{
+  position:absolute; bottom:-40px; font-size:16px; color:var(--hot); opacity:.85;
+  filter:drop-shadow(0 6px 8px rgba(255,59,154,.25));
+  animation:floatUp linear forwards;
+}
+@keyframes floatUp{ to{ transform:translateY(-110vh) rotate(360deg); opacity:0 } }
+

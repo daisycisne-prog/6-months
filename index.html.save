@@ -1,0 +1,49 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Happy 6 Months Amor!!!</title>
+
+  <!-- Pretty handwritten font -->
+  <link href="https://fonts.googleapis.com/css2?family=Pacifico&display=swap" rel="stylesheet" />
+
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <!-- Floating hearts background -->
+  <div id="hearts-layer"></div>
+
+  <!-- Main card -->
+  <main class="card">
+    <h1>Happy 6 Months Amor!!! 💖</h1>
+
+    <!-- Picture + Message side by side -->
+    <div class="content-row">
+      <!-- Picture -->
+      <img
+        class="corgi"
+        src="photo.jpg"
+        alt="Us" />
+
+      <!-- Message box -->
+      <div class="message-box">
+        <h2>For You 💌</h2>
+        <p>
+          Wow! 6 WHOLE MONTHS! Whd. 💕
+        </p>
+      </div>
+    </div>
+
+    <!-- Music and timer under both -->
+    <button id="musicBtn" class="btn">Play</button>
+    <audio id="player" src="song.mp3" preload="auto" loop></audio>
+
+    <p class="since-label">We’ve been us for</p>
+    <div id="timer" class="timer">—</div>
+  </main>
+
+  <script src="script.js"></script>
+</body>
+</html>
+

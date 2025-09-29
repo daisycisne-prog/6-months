@@ -1,0 +1,34 @@
+body {
+  margin: 0;
+  padding: 0;
+  background: pink;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+  font-family: 'Pacifico', cursive;
+  text-align: center;
+}
+
+.container {
+  background: white;
+  padding: 2rem;
+  border-radius: 20px;
+  box-shadow: 0 6px 20px rgba(0,0,0,0.2);
+}
+
+h1 {
+  font-size: 2.5rem;
+  color: hotpink;
+  margin-bottom: 1.5rem;
+}
+
+.corgi {
+  max-width: 300px;
+  border-radius: 15px;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+}
+nano index.html
+
+
+
