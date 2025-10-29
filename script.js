@@ -91,4 +91,3 @@ document.addEventListener('mousemove', (e) => {
 
   setTimeout(() => heart.remove(), 1000);
 });
-

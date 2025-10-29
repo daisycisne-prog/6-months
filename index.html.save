@@ -1,49 +1,179 @@
-<!doctype html>
+nano <!doctype html>
 <html lang="en">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Happy 6 Months Amor!!!</title>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <title>HAPPY SEVEN MONTHS bb!!!</title>
+  <style>
+    /* ===== Base ===== */
+    html,body{height:100%;margin:0}
+    body{
+      background:#000; color:#fff; overflow:hidden;
+      font-family:ui-rounded,system-ui,-apple-system,"Segoe UI",Arial,sans-serif;
+    }
 
-  <!-- Pretty handwritten font -->
-  <link href="https://fonts.googleapis.com/css2?family=Pacifico&display=swap" rel="stylesheet" />
+    /* Star canvas sits behind everything */
+    #sky{position:fixed; inset:0; z-index:0; pointer-events:none}
+    /* When original is shown, hide star canvas & header */
+    body.original-on #sky{display:none}
 
-  <link rel="stylesheet" href="styles.css" />
+    /* Header title */
+    h1.title{
+      position:fixed; top:14px; left:50%; transform:translateX(-50%);
+      margin:0; z-index:2; font-weight:800;
+      font-size:clamp(1.6rem,5vw,2.6rem);
+      letter-spacing:.5px;
+      text-shadow:0 0 12px #fff, 0 0 24px #ffe88b;
+      pointer-events:none;
+    }
+    body.original-on h1.title{display:none}
+
+    /* Starry view (video centered) */
+    #starryView{
+      position:relative; z-index:2; height:100%; width:100%;
+      display:grid; place-items:center; padding:6vh 4vw;
+    }
+    body.original-on #starryView{display:none}
+
+    .video-frame{
+      width:min(92vw, 1100px);   /* adjust 900–1400px to taste */
+      max-height:86vh;
+      height:auto;
+      overflow:visible;
+      background:#000;
+      border-radius:16px;
+      box-shadow:
+        0 20px 60px rgba(0,0,0,.85),
+        0 0 40px rgba(255,255,255,.06),
+        0 0 80px rgba(255,230,130,.12);
+      outline:1px solid rgba(255,230,130,.18);
+    }
+    video{
+      display:block;
+      width:100%;
+      height:auto;          /* key: not 100% */
+      max-height:86vh;      /* stay within screen */
+      object-fit:contain;   /* no zoom/crop */
+      background:#000;
+    }
+
+    /* Original view (loaded instantly in-page) */
+    #originalView{ position:relative; z-index:2; height:100vh; width:100vw; display:none; }
+    body.original-on #originalView{ display:block; }
+    #originalFrame{ width:100%; height:100%; border:0; background:#fff; }
+
+    /* Floating round toggle button */
+    #toggleBtn{
+      position:fixed; right:18px; bottom:18px; z-index:99999;
+      width:46px; height:46px; display:grid; place-items:center;
+      border-radius:50%;
+      font-size:22px; line-height:1; text-decoration:none;
+      color:#ffe88b; background:rgba(255,232,139,0.18); border:1px solid #ffe88b;
+      box-shadow:0 10px 24px rgba(0,0,0,.35); backdrop-filter:blur(4px);
+      cursor:pointer; transition:transform .12s, filter .2s;
+    }
+    #toggleBtn:hover{ filter:brightness(1.2); transform:translateY(-1px) }
+  </style>
 </head>
 <body>
-  <!-- Floating hearts background -->
-  <div id="hearts-layer"></div>
+  <!-- One canvas for stars + moon -->
+  <canvas id="sky"></canvas>
 
-  <!-- Main card -->
-  <main class="card">
-    <h1>Happy 6 Months Amor!!! 💖</h1>
+  <!-- Title -->
+  <h1 class="title">HAPPY SEVEN MONTHS bb!!!</h1>
 
-    <!-- Picture + Message side by side -->
-    <div class="content-row">
-      <!-- Picture -->
-      <img
-        class="corgi"
-        src="photo.jpg"
-        alt="Us" />
-
-      <!-- Message box -->
-      <div class="message-box">
-        <h2>For You 💌</h2>
-        <p>
-          Wow! 6 WHOLE MONTHS! Whd. 💕
-        </p>
-      </div>
+  <!-- STARLY THEME (video) -->
+  <main id="starryView">
+    <div class="video-frame">
+      <video id="vid" src="video.mp4" controls playsinline preload="metadata"></video>
     </div>
-
-    <!-- Music and timer under both -->
-    <button id="musicBtn" class="btn">Play</button>
-    <audio id="player" src="song.mp3" preload="auto" loop></audio>
-
-    <p class="since-label">We’ve been us for</p>
-    <div id="timer" class="timer">—</div>
   </main>
 
-  <script src="script.js"></script>
+  <!-- ORIGINAL THEME (instantly toggled via iframe) -->
+  <section id="originalView" aria-label="Original page">
+    <iframe id="originalFrame" src="index_v1.html"></iframe>
+  </section>
+
+  <!-- Toggle: 💖 shows Original; 🌙 shows Starry -->
+  <a id="toggleBtn" href="#" title="Switch version" aria-label="Switch version">💖</a>
+
+  <script>
+    /* ===== Twinkling starfield + single canvas moon ===== */
+    const c = document.getElementById('sky');
+    const x = c.getContext('2d');
+
+    function resize(){
+      c.width = innerWidth;
+      c.height = innerHeight;
+    }
+    addEventListener('resize', resize); resize();
+
+    // Build stars
+    const STAR_COUNT = 260;
+    const stars = Array.from({length: STAR_COUNT}, () => ({
+      x: Math.random()*c.width,
+      y: Math.random()*c.height,
+      r: Math.random()*1.4 + 0.4,
+      phase: Math.random()*Math.PI*2,
+      speed: Math.random()*0.015 + 0.006, // twinkle speed
+      hue: Math.random()<0.35 ? 55 : 0    // 55≈gold, 0≈white
+    }));
+
+    function drawMoon(){
+      const mx = c.width - 120, my = 120, r = 64;
+      const g = x.createRadialGradient(mx-12,my-12,10, mx,my,r);
+      g.addColorStop(0, '#fffde6');
+      g.addColorStop(1, '#efe4a8');
+      x.fillStyle = g;
+      x.beginPath(); x.arc(mx,my,r,0,Math.PI*2); x.fill();
+
+      // subtle crescent shade
+      x.fillStyle = 'rgba(0,0,0,0.28)';
+      x.beginPath(); x.arc(mx+18,my,r,0,Math.PI*2); x.fill();
+    }
+
+    function frame(){
+      x.clearRect(0,0,c.width,c.height);
+
+      // stars (twinkle)
+      for(const s of stars){
+        s.phase += s.speed;
+        const tw = 0.4 + 0.6*Math.sin(s.phase); // 0..1
+        const R  = s.r * (0.8 + tw*0.7);
+
+        x.beginPath();
+        x.arc(s.x, s.y, R, 0, Math.PI*2);
+        x.fillStyle   = `hsla(${s.hue}, 100%, ${70 + tw*25}%, 0.9)`;
+        x.shadowColor = `hsla(${s.hue}, 100%, 85%, 0.9)`;
+        x.shadowBlur  = 6 + tw*10;
+        x.fill();
+        x.shadowBlur  = 0;
+      }
+
+      // single moon (no duplicate HTML moon)
+      drawMoon();
+
+      requestAnimationFrame(frame);
+    }
+    frame();
+
+    /* ===== Instant theme toggle (no page load) ===== */
+    const btn = document.getElementById('toggleBtn');
+    function setOriginal(on){
+      document.body.classList.toggle('original-on', on);
+      btn.textContent = on ? '🌙' : '💖'; // moon = back to starry; heart = show original
+    }
+    btn.addEventListener('click', (e)=>{ e.preventDefault(); setOriginal(!document.body.classList.contains('original-on')); });
+
+    // keyboard shortcuts: → to Original, ← to Starry
+    document.addEventListener('keydown', (e)=>{
+      if(e.key==='ArrowRight') setOriginal(true);
+      if(e.key==='ArrowLeft')  setOriginal(false);
+    });
+
+    // start on starry
+    setOriginal(false);
+  </script>
 </body>
 </html>
 

@@ -1,0 +1,62 @@
+.theme-toggle{
+  position:fixed; bottom:20px; right:25px;
+  background:#ffb6d9; color:#fff; padding:10px 18px; border-radius:50px;
+  text-decoration:none; font-weight:700; font-family:system-ui, sans-serif;
+  box-shadow:0 4px 12px rgba(0,0,0,.2); transition:.15s transform;
+}
+.theme-toggle:hover{ transform:translateY(-2px) }
+
+/* put the video tab on the bottom-left so it doesn't overlap your other toggle */
+.theme-toggle.video-tab{ right:auto; left:25px; background:#cc6b2b }
+.theme-toggle.video-tab:hover{ background:#a34a1f }
+
+/* Make nav links always clickable & visible */
+.nav-link{
+  position: fixed;
+  z-index: 99999;          /* be on top of all layers */
+  bottom: 20px;
+  right: 20px;             /* for the "next" link */
+  font-family: 'Pacifico', cursive;
+  font-size: 1.05rem;
+  color: #fff;
+  text-decoration: none;
+  background: rgba(0,0,0,0.35);
+  padding: 10px 14px;
+  border-radius: 12px;
+  backdrop-filter: blur(4px);
+  box-shadow: 0 6px 16px rgba(0,0,0,.25);
+  transition: .2s;
+}
+.nav-link:hover{ transform: translateY(-1px); filter: brightness(1.15); }
+
+/* place the back link bottom-left on the black page */
+.go-back { left: 20px; right: auto; }
+
+/* If you have any full-screen layers, make them ignore clicks */
+#hearts-layer, #leaves-layer {
+  pointer-events: none !important;
+  z-index: 1;              /* keep them behind */
+}
+
+/* Floating toggle button (original pink colors) */
+.toggle-btn{
+  position: fixed;
+  bottom: 18px; right: 18px;
+  width: 46px; height: 46px;
+  display: grid; place-items: center;
+  border-radius: 50%;
+  text-decoration: none;
+  font-size: 22px; line-height: 1;
+  color: #ff3b9a;
+  background: rgba(255,59,154,0.16);
+  border: 1px solid #ff3b9a;
+  box-shadow: 0 10px 24px rgba(255,59,154,.25);
+  backdrop-filter: blur(4px);
+  z-index: 99999;
+  transition: transform .12s, filter .2s;
+}
+.toggle-btn:hover{ filter: brightness(1.12); transform: translateY(-1px); }
+
+/* safety if you have heart layers */
+#hearts-layer { pointer-events: none !important; }
+

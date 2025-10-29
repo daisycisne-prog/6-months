@@ -1,0 +1,72 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Happy 6 Months Amor</title>
+
+  <!-- Pretty handwritten font -->
+  <link href="https://fonts.googleapis.com/css2?family=Pacifico&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <!-- Floating hearts background -->
+  <div id="hearts-layer"></div>
+
+  <!-- Main card -->
+  <main class="card">
+    <h1>Happy 6 Months Amor! 💖</h1>
+
+    <!-- Two-column: photo (left) + message box (right) -->
+    <section class="content-grid">
+      <!-- Photo -->
+      <div class="media-wrap">
+        <img class="hero-media" src="photo.jpg?v=3" alt="Us">
+      </div>
+
+      <!-- Message -->
+      <aside class="message-card">
+        <h2>Baby!!! 💌</h2>
+        <div class="message-body">
+          <p>
+            I am so grateful to have met you and to have had the chance to know you this long.
+            You’ve been such an incredible addition to my life. With you, I feel safe, loved, and so, so, sooooo happy.
+            As you’ve said before, a relationship isn’t always easy, but when I look back at all the moments we’ve shared,
+            I’m grateful for every single one.
+          </p>
+          <p>
+            From laughing, singing, dancing, cooking, taking trips, hugging, and kissing,
+            to talking through difficult parts of our lives and being vulnerable with each other,
+            I treasure it all, because each moment brings us that much closer.
+            I love you so much, and I am so excited for our future together.
+          </p>
+          <p>
+            I wish you the best of luck with clinicals, and I know you’re going to be an amazing PA.
+            I can’t wait for us to share stories about our days at work, even the tough ones,
+            knowing that we’ll always be there for each other.
+            I can honestly say I am the happiest I’ve been in a long time.
+          </p>
+          <p>
+            I’m so glad I met you, and here’s to many, many more months together bb!
+            I love you with all my heart! ❤️
+          </p>
+        </div>
+      </aside>
+    </section>
+
+    <!-- Music + Timer -->
+    <div class="controls">
+      <button id="musicBtn" class="btn">Play</button>
+      <audio id="player" src="song.mp3" preload="auto" loop></audio>
+
+      <div class="timer-wrap">
+        <p class="since-label">We’ve been us for</p>
+        <div id="timer" class="timer">—</div>
+      </div>
+    </div>
+  </main>
+
+  <script src="script.js?v=2"></script>
+<a href="video.html" class="theme-toggle video-tab">🎬 Video</a>
+</body>
+</html>
