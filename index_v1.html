@@ -1,71 +1,263 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Happy 6 Months Amor</title>
+  <meta charset="UTF-8" />
+  <title>Happy 8 Months Baby!!! ❤️</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-  <!-- Pretty handwritten font -->
-  <link href="https://fonts.googleapis.com/css2?family=Pacifico&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="styles.css" />
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    :root {
+      --cream: #f5f0e8;
+      --dark-red: #7f1d1d;
+      --soft-border: #e5ded0;
+    }
+
+    body {
+      font-family: system-ui, -apple-system, "Helvetica Neue", sans-serif;
+      min-height: 100vh;
+      background: var(--cream);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      position: relative;
+      overflow: hidden;
+      color: #111827;
+      /* red heart cursor */
+      cursor: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='32' height='32'><path d='M16 29s-9-4.94-9-13a5 5 0 0 1 9-3 5 5 0 0 1 9 3c0 8.06-9 13-9 13z' fill='%23b91c1c' stroke='%23fecaca' stroke-width='2'/></svg>") 16 16, auto;
+    }
+
+    /* ===== POLAROID BACKGROUND ===== */
+    .polaroid-bg {
+      position: fixed;
+      inset: -60px;
+      z-index: 0;
+      opacity: 0.33;
+      pointer-events: none;
+    }
+
+    .polaroid {
+      position: absolute;
+      width: 140px;
+      height: 170px;
+      background: white;
+      border-radius: 6px;
+      box-shadow: 0 10px 20px rgba(0,0,0,0.15);
+    }
+
+    .polaroid-inner {
+      position: absolute;
+      top: 14px;
+      left: 12px;
+      right: 12px;
+      bottom: 32px;
+      border-radius: 3px;
+      background: #ececec;
+      border: 1px solid #d4d4d4;
+    }
+
+    .p1 { top: 6%; left: 10%; transform: rotate(-12deg); }
+    .p2 { top: 16%; right: 8%; transform: rotate(8deg); }
+    .p3 { top: 48%; left: 4%; transform: rotate(6deg); }
+    .p4 { top: 60%; right: 12%; transform: rotate(-10deg); }
+    .p5 { top: 20%; left: 45%; transform: rotate(3deg); }
+    .p6 { bottom: 4%; left: 28%; transform: rotate(-5deg); }
+    .p7 { bottom: 10%; right: 30%; transform: rotate(11deg); }
+
+    /* ===== FLOATING RED HEARTS ===== */
+    #hearts-container {
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: 1;
+    }
+
+    .heart {
+      position: absolute;
+      color: #b91c1c;
+      font-size: 20px;
+      animation: floatUp 6s linear infinite;
+      opacity: 0.7;
+    }
+
+    @keyframes floatUp {
+      0% {
+        transform: translateY(100vh) translateX(0);
+        opacity: 0;
+      }
+      25% {
+        opacity: 0.9;
+      }
+      100% {
+        transform: translateY(-10vh) translateX(20px);
+        opacity: 0;
+      }
+    }
+
+    /* ===== MAIN CONTENT ===== */
+    .content {
+      position: relative;
+      z-index: 2;
+      width: 100%;
+      max-width: 640px;
+      padding: 24px 16px 32px;
+      text-align: center;
+    }
+
+    h1 {
+      font-size: 2.2rem;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--dark-red); /* title dark red */
+      margin-bottom: 8px;
+    }
+
+    .subtitle {
+      font-size: 0.95rem;
+      color: #4b5563;
+      margin-bottom: 18px;
+    }
+
+    .video-wrapper {
+      margin: 0 auto;
+      max-width: 480px;
+      background: rgba(255,255,255,0.9);
+      padding: 10px;
+      border-radius: 20px;
+      box-shadow: 0 18px 40px rgba(0,0,0,0.22);
+      border: 1px solid rgba(0,0,0,0.06);
+    }
+
+    video {
+      width: 100%;
+      border-radius: 14px;
+      display: block;
+      background: #000;
+    }
+
+    .timer-box {
+      margin-top: 20px;
+      display: inline-flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 10px 22px;
+      border-radius: 999px;
+      background: rgba(255,255,255,0.95);
+      border: 1px solid var(--soft-border);
+      box-shadow: 0 12px 28px rgba(148,119,92,0.25);
+    }
+
+    .timer-label {
+      font-size: 0.75rem;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: #6b7280;
+    }
+
+    .timer-days {
+      margin-top: 4px;
+      font-size: 1.2rem;
+      font-weight: 600;
+      color: var(--dark-red); /* timer text dark red */
+    }
+
+    @media (min-width: 640px) {
+      h1 {
+        font-size: 2.6rem;
+      }
+      .subtitle {
+        font-size: 1rem;
+      }
+    }
+  </style>
 </head>
 <body>
-  <!-- Floating hearts background -->
-  <div id="hearts-layer"></div>
+  <!-- Polaroid background -->
+  <div class="polaroid-bg">
+    <div class="polaroid p1"><div class="polaroid-inner"></div></div>
+    <div class="polaroid p2"><div class="polaroid-inner"></div></div>
+    <div class="polaroid p3"><div class="polaroid-inner"></div></div>
+    <div class="polaroid p4"><div class="polaroid-inner"></div></div>
+    <div class="polaroid p5"><div class="polaroid-inner"></div></div>
+    <div class="polaroid p6"><div class="polaroid-inner"></div></div>
+    <div class="polaroid p7"><div class="polaroid-inner"></div></div>
+  </div>
 
-  <!-- Main card -->
-  <main class="card">
-    <h1>Happy 6 Months Amor! 💖</h1>
+  <!-- Floating hearts -->
+  <div id="hearts-container"></div>
 
-    <!-- Two-column: photo (left) + message box (right) -->
-    <section class="content-grid">
-      <!-- Photo -->
-      <div class="media-wrap">
-        <img class="hero-media" src="photo.jpg?v=3" alt="Us">
-      </div>
+  <!-- Main content -->
+  <div class="content">
+    <h1>Happy 8 months baby</h1>
+    <p class="subtitle">
+      I love you more everyday. Thank you for being my safe place, my joy, and my favorite person. I miss you every day, but getting to love you and being your girlfriend makes the distance feel worth it. I'm counting down till our next hug!!! Thank you for making hard days softer and good days unforgettable. Te amo mi amor!!!
+    </p>
 
-      <!-- Message -->
-      <aside class="message-card">
-        <h2>Baby!!! 💌</h2>
-        <div class="message-body">
-          <p>
-            I am so grateful to have met you and to have had the chance to know you this long.
-            You’ve been such an incredible addition to my life. With you, I feel safe, loved, and so, so, sooooo happy.
-            As you’ve said before, a relationship isn’t always easy, but when I look back at all the moments we’ve shared,
-            I’m grateful for every single one.
-          </p>
-          <p>
-            From laughing, singing, dancing, cooking, taking trips, hugging, and kissing,
-            to talking through difficult parts of our lives and being vulnerable with each other,
-            I treasure it all, because each moment brings us that much closer.
-            I love you so much, and I am so excited for our future together.
-          </p>
-          <p>
-            I wish you the best of luck with clinicals, and I know you’re going to be an amazing PA.
-            I can’t wait for us to share stories about our days at work, even the tough ones,
-            knowing that we’ll always be there for each other.
-            I can honestly say I am the happiest I’ve been in a long time.
-          </p>
-          <p>
-            I’m so glad I met you, and here’s to many, many more months together bb!
-            I love you with all my heart! ❤️
-          </p>
-        </div>
-      </aside>
-    </section>
-
-    <!-- Music + Timer -->
-    <div class="controls">
-      <button id="musicBtn" class="btn">Play</button>
-      <audio id="player" src="song.mp3" preload="auto" loop></audio>
-
-      <div class="timer-wrap">
-        <p class="since-label">We’ve been us for</p>
-        <div id="timer" class="timer">—</div>
-      </div>
+    <div class="video-wrapper">
+      <!-- your video in the middle -->
+      <video src="vizeo.mp4" controls loop playsinline></video>
     </div>
-  </main>
 
-  <script src="script.js?v=2"></script>
+    <div class="timer-box">
+      <div class="timer-label">Time we've been together</div>
+      <div class="timer-days" id="timer-output">Loading...</div>
+    </div>
+  </div>
+
+  <script>
+    // ===== TIMER: months + days since March 30, 2025 =====
+    const startDate = new Date("2025-03-30T00:00:00");
+
+    function updateTimer() {
+      const now = new Date();
+
+      let years = now.getFullYear() - startDate.getFullYear();
+      let months = now.getMonth() - startDate.getMonth();
+      let days = now.getDate() - startDate.getDate();
+
+      if (days < 0) {
+        months--;
+        const prevMonthDays = new Date(now.getFullYear(), now.getMonth(), 0).getDate();
+        days += prevMonthDays;
+      }
+
+      if (months < 0) {
+        years--;
+        months += 12;
+      }
+
+      // convert years to extra months
+      months += years * 12;
+
+      document.getElementById("timer-output").textContent =
+        `${months} months and ${days} days ❤️`;
+    }
+
+    updateTimer();
+    setInterval(updateTimer, 3600 * 1000); // update every hour
+
+    // ===== FLOATING HEARTS =====
+    function createHeart() {
+      const heart = document.createElement("div");
+      heart.className = "heart";
+      heart.textContent = "❤️";
+
+      heart.style.left = Math.random() * 100 + "vw";
+      heart.style.fontSize = 16 + Math.random() * 20 + "px";
+      heart.style.animationDuration = 5 + Math.random() * 5 + "s";
+
+      document.getElementById("hearts-container").appendChild(heart);
+
+      setTimeout(() => heart.remove(), 10000);
+    }
+
+    setInterval(createHeart, 800);
+  </script>
 </body>
 </html>
+

@@ -15,8 +15,7 @@
 
   <!-- Main card -->
   <main class="card">
-    <h1>Happy 6 Months Amor! 💖</h1>
-
+    <h1>Happy 8  Months r! 💖</h1>
     <!-- Two-column: photo (left) + message box (right) -->
     <section class="content-grid">
       <!-- Photo -->
@@ -67,6 +66,5 @@
   </main>
 
   <script src="script.js?v=2"></script>
-<a href="video.html" class="theme-toggle video-tab">🎬 Video</a>
 </body>
 </html>
