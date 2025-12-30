@@ -3,225 +3,290 @@
 <head>
   <meta charset="utf-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
-  <title>HAPPY SEVEN MONTHS BB!!!</title>
+  <title>HAPPY 9 MONTHS AMOR!!!</title>
   <style>
-    /* ===== Base ===== */
+    :root{
+      --bg:#f8f4e8;     /* cream */
+      --ink:#0d245f;    /* dark blue */
+      --comet:#1d3a8a;  /* comet blue */
+    }
+    *{box-sizing:border-box}
     html,body{height:100%;margin:0}
     body{
-      background:#000; color:#fff; overflow:hidden;
+      background:var(--bg);
+      color:var(--ink);
       font-family:ui-rounded,system-ui,-apple-system,"Segoe UI",Arial,sans-serif;
+      overflow:hidden;             /* keep canvases inside */
+      cursor:none;                 /* hide default cursor */
     }
 
-    /* Star canvas sits behind everything */
+    /* canvases */
     #sky{position:fixed; inset:0; z-index:0; pointer-events:none}
-    /* When original is shown, hide star canvas & header */
-    body.original-on #sky{display:none}
+    #cursor{position:fixed; inset:0; z-index:3; pointer-events:none}
 
-    /* Header title */
-    h1.title{
-      position:fixed; top:14px; left:50%; transform:translateX(-50%);
-      margin:0; z-index:2; font-weight:800;
+    /* header */
+    h1.header{
+      position:fixed; top:16px; left:50%; transform:translateX(-50%);
+      margin:0; z-index:2; text-align:center;
+      font-weight:800; letter-spacing:.5px;
       font-size:clamp(1.6rem,5vw,2.6rem);
-      letter-spacing:.5px;
-      text-shadow:0 0 12px #fff, 0 0 24px #ffe88b;
+      color:var(--ink);
+      text-shadow:0 1px 0 rgba(13,36,95,.08);
       pointer-events:none;
     }
-    body.original-on h1.title{display:none}
 
-    /* Starry view (video centered) */
-    #starryView{
-      position:relative; z-index:2; height:100%; width:100%;
-      display:grid; place-items:center; padding:6vh 4vw;
+    /* perfectly centered video area */
+    main.page{
+      position:relative; z-index:1;
+      height:100vh;                      /* full viewport */
+      display:grid; place-items:center;  /* true center */
+      padding:0 4vw;
     }
-    body.original-on #starryView{display:none}
-
     .video-frame{
-      width:min(92vw, 1100px);   /* adjust 900–1400px to taste */
-      max-height:86vh;
-      height:auto;
-      overflow:visible;
-      background:#000;
+      width: min(88vw, 980px);
+      max-height: calc(100vh - 180px);   /* room for title + timer */
+      background: var(--bg);             /* cream letterbox */
       border-radius:16px;
-      box-shadow:
-        0 20px 60px rgba(0,0,0,.85),
-        0 0 40px rgba(255,255,255,.06),
-        0 0 80px rgba(255,230,130,.12);
-      outline:1px solid rgba(255,230,130,.18);
+      box-shadow:0 22px 48px rgba(0,0,0,.25);
+      outline:1px solid rgba(13,36,95,.15);
+      overflow:hidden;
     }
     video{
       display:block;
       width:100%;
-      height:auto;          /* key: not 100% */
-      max-height:86vh;      /* stay within screen */
-      object-fit:contain;   /* no zoom/crop */
-      background:#000;
+      height:auto;
+      max-height:inherit;                /* obey the frame cap */
+      object-fit: contain;               /* keep full video */
+      background: var(--bg);             /* cream letterbox inside video */
     }
 
-    /* Original view (loaded instantly in-page) */
-    #originalView{ position:relative; z-index:2; height:100vh; width:100vw; display:none; }
-    body.original-on #originalView{ display:block; }
-    #originalFrame{ width:100%; height:100%; border:0; background:#fff; }
-
-    /* Floating round toggle button */
-    #toggleBtn{
-      position:fixed; right:18px; bottom:18px; z-index:99999;
-      width:46px; height:46px; display:grid; place-items:center;
-      border-radius:50%;
-      font-size:22px; line-height:1; text-decoration:none;
-      color:#ffe88b; background:rgba(255,232,139,0.18); border:1px solid #ffe88b;
-      box-shadow:0 10px 24px rgba(0,0,0,.35); backdrop-filter:blur(4px);
-      cursor:pointer; transition:transform .12s, filter .2s;
+    /* bottom timer */
+    .timer-bar{
+      position:fixed; left:50%; bottom:12px; transform:translateX(-50%);
+      z-index:2; background:rgba(255,255,255,.78);
+      color:var(--ink); border:1px solid rgba(13,36,95,.18);
+      border-radius:999px; padding:.6rem 1rem;
+      backdrop-filter:blur(6px);
+      box-shadow:0 8px 20px rgba(0,0,0,.12);
+      font-weight:700; letter-spacing:.3px;
+      text-align:center;
+      white-space:nowrap;
     }
-    #toggleBtn:hover{ filter:brightness(1.2); transform:translateY(-1px) }
-/* --- Shooting-star cursor trail --- */
-.cursor-comet{
-  position: fixed; left: 0; top: 0;
-  transform: translate(-50%, -50%) rotate(var(--rot, 0deg));
-  z-index: 99998; pointer-events: none;
-  width: 10px; height: 10px; border-radius: 50%;
-  background: radial-gradient(circle, #ffffff, #ffe88b 45%, transparent 70%);
-  filter: drop-shadow(0 0 10px #ffe88b) drop-shadow(0 0 18px #ffe88b);
-  animation: comet-fly 700ms cubic-bezier(.22,.61,.36,1) forwards;
-}
-.cursor-comet::after{
-  content:""; position:absolute; left:-70px; top:50%;
-  transform: translateY(-50%); width:70px; height:2px;
-  background: linear-gradient(to right, transparent, rgba(255,232,139,.95), transparent);
-  filter: blur(1px);
-}
-@keyframes comet-fly{
-  0%{opacity:1; transform:translate(-50%,-50%) rotate(var(--rot)) scale(1)}
-  100%{opacity:0; transform:translate(calc(-50% + var(--dx,0px)), calc(-50% + var(--dy,0px))) rotate(var(--rot)) scale(.7)}
-}
-  
-</style>
+  </style>
 </head>
 <body>
-  <!-- One canvas for stars + moon -->
+  <!-- background stars -->
   <canvas id="sky"></canvas>
+  <!-- shooting-star cursor layer -->
+  <canvas id="cursor"></canvas>
 
-  <!-- Title -->
-  <h1 class="title">HAPPY SEVEN MONTHS bb!!!</h1>
+  <!-- title -->
+  <h1 class="header">HAPPY 9 MONTHS AMOR!!!</h1>
 
-  <!-- STARLY THEME (video) -->
-  <main id="starryView">
+  <!-- centered video -->
+  <main class="page">
     <div class="video-frame">
-      <video id="vid" src="video.mp4" controls playsinline preload="metadata"></video>
+      <video src="vileo.mp4" controls playsinline preload="metadata"></video>
     </div>
   </main>
 
-  <!-- ORIGINAL THEME (instantly toggled via iframe) -->
-  <section id="originalView" aria-label="Original page">
-    <iframe id="originalFrame" src="index_v1.html"></iframe>
-  </section>
-
-  <!-- Toggle: 💖 shows Original; 🌙 shows Starry -->
-  <a id="toggleBtn" href="#" title="Switch version" aria-label="Switch version">💖</a>
+  <!-- months + days since Mar 30, 2025 -->
+  <div class="timer-bar" id="timer">Together: …</div>
 
   <script>
-    /* ===== Twinkling starfield + single canvas moon ===== */
-    const c = document.getElementById('sky');
-    const x = c.getContext('2d');
+    /* ========= BACKGROUND: real 5-point stars + tiny dots ========= */
+    const sky = document.getElementById('sky');
+    const sctx = sky.getContext('2d');
 
-    function resize(){
-      c.width = innerWidth;
-      c.height = innerHeight;
+    function skyResize(){
+      sky.width = innerWidth;
+      sky.height = innerHeight;
     }
-    addEventListener('resize', resize); resize();
+    addEventListener('resize', skyResize); skyResize();
 
-    // Build stars
-    const STAR_COUNT = 260;
-    const stars = Array.from({length: STAR_COUNT}, () => ({
-      x: Math.random()*c.width,
-      y: Math.random()*c.height,
-      r: Math.random()*1.4 + 0.4,
-      phase: Math.random()*Math.PI*2,
-      speed: Math.random()*0.015 + 0.006, // twinkle speed
-      hue: Math.random()<0.35 ? 55 : 0    // 55≈gold, 0≈white
-    }));
+    const DOT_COUNT  = Math.min(260, Math.floor((innerWidth*innerHeight)/6000));
+    const STAR_COUNT = Math.min(120, Math.floor((innerWidth*innerHeight)/15000));
 
-    function drawMoon(){
-      const mx = c.width - 120, my = 120, r = 64;
-      const g = x.createRadialGradient(mx-12,my-12,10, mx,my,r);
-      g.addColorStop(0, '#fffde6');
-      g.addColorStop(1, '#efe4a8');
-      x.fillStyle = g;
-      x.beginPath(); x.arc(mx,my,r,0,Math.PI*2); x.fill();
+    const dots = [];
+    const stars = [];
+    const rnd = (a,b)=> Math.random()*(b-a)+a;
 
-      // subtle crescent shade
-      x.fillStyle = 'rgba(0,0,0,0.28)';
-      x.beginPath(); x.arc(mx+18,my,r,0,Math.PI*2); x.fill();
+    function newDot(y = Math.random()*sky.height){
+      return {
+        x: Math.random()*sky.width,
+        y,
+        r: rnd(0.6, 1.6),
+        baseA: rnd(0.4, 0.9),
+        t: rnd(0, Math.PI*2), ts: rnd(0.003, 0.01),
+        vx: rnd(-0.05, 0.05), vy: rnd(0.04, 0.12)
+      };
+    }
+    function newStar(y = Math.random()*sky.height){
+      return {
+        x: Math.random()*sky.width, y,
+        R: rnd(5, 10), r: rnd(2, 4),
+        rot: rnd(0, Math.PI*2),
+        baseA: rnd(0.55, 0.95),
+        t: rnd(0, Math.PI*2), ts: rnd(0.002, 0.006),
+        vx: rnd(-0.04, 0.04), vy: rnd(0.04, 0.10)
+      };
+    }
+    for(let i=0;i<DOT_COUNT;i++)  dots.push(newDot());
+    for(let i=0;i<STAR_COUNT;i++) stars.push(newStar());
+
+    function drawFiveStar(ctx, x, y, R, r, rot){
+      ctx.save(); ctx.translate(x, y); ctx.rotate(rot);
+      ctx.beginPath();
+      for(let i=0;i<10;i++){
+        const ang = i * Math.PI/5;
+        const rad = (i % 2 === 0) ? R : r;
+        const px = Math.cos(ang) * rad;
+        const py = Math.sin(ang) * rad;
+        if(i===0) ctx.moveTo(px,py); else ctx.lineTo(px,py);
+      }
+      ctx.closePath(); ctx.fill(); ctx.restore();
     }
 
-    function frame(){
-      x.clearRect(0,0,c.width,c.height);
+    function skyFrame(){
+      sctx.clearRect(0,0,sky.width,sky.height);
 
-      // stars (twinkle)
-      for(const s of stars){
-        s.phase += s.speed;
-        const tw = 0.4 + 0.6*Math.sin(s.phase); // 0..1
-        const R  = s.r * (0.8 + tw*0.7);
+      for(const d of dots){
+        d.x += d.vx; d.y += d.vy;
+        if(d.x < -5) d.x = sky.width+5;
+        if(d.x > sky.width+5) d.x = -5;
+        if(d.y > sky.height+5){ d.y = -5; d.x = Math.random()*sky.width; }
 
-        x.beginPath();
-        x.arc(s.x, s.y, R, 0, Math.PI*2);
-        x.fillStyle   = `hsla(${s.hue}, 100%, ${70 + tw*25}%, 0.9)`;
-        x.shadowColor = `hsla(${s.hue}, 100%, 85%, 0.9)`;
-        x.shadowBlur  = 6 + tw*10;
-        x.fill();
-        x.shadowBlur  = 0;
+        d.t += d.ts;
+        const tw = 0.5 + Math.sin(d.t)*0.5;
+        const a  = Math.max(0, Math.min(1, d.baseA*0.6 + tw*0.5));
+        sctx.beginPath();
+        sctx.arc(d.x, d.y, d.r + tw*0.4, 0, Math.PI*2);
+        sctx.fillStyle = `rgba(13,36,95,${a})`;
+        sctx.shadowColor = "rgba(13,36,95,0.35)";
+        sctx.shadowBlur = 2 + tw*2.5;
+        sctx.fill(); sctx.shadowBlur = 0;
       }
 
-      // single moon (no duplicate HTML moon)
-      drawMoon();
+      for(const s of stars){
+        s.x += s.vx; s.y += s.vy;
+        if(s.x < -10) s.x = sky.width+10;
+        if(s.x > sky.width+10) s.x = -10;
+        if(s.y > sky.height+10){ s.y = -10; s.x = Math.random()*sky.width; }
 
-      requestAnimationFrame(frame);
+        s.t += s.ts; s.rot += 0.0008;
+        const tw = 0.5 + Math.sin(s.t)*0.5;
+        const a  = Math.max(0, Math.min(1, s.baseA*0.55 + tw*0.5));
+        const grow = 1 + tw*0.18;
+
+        sctx.fillStyle   = `rgba(13,36,95,${a})`;
+        sctx.shadowColor = "rgba(13,36,95,0.5)";
+        sctx.shadowBlur  = 5 + tw*6;
+        drawFiveStar(sctx, s.x, s.y, s.R*grow, s.r*grow, s.rot);
+        sctx.shadowBlur  = 0;
+      }
+
+      requestAnimationFrame(skyFrame);
     }
-    frame();
+    skyFrame();
 
-    /* ===== Instant theme toggle (no page load) ===== */
-    const btn = document.getElementById('toggleBtn');
-    function setOriginal(on){
-      document.body.classList.toggle('original-on', on);
-      btn.textContent = on ? '🌙' : '💖'; // moon = back to starry; heart = show original
+    /* ========= SHOOTING-STAR CURSOR ========= */
+    const cometCanvas = document.getElementById('cursor');
+    const cctx = cometCanvas.getContext('2d');
+    function cometResize(){ cometCanvas.width = innerWidth; cometCanvas.height = innerHeight; }
+    addEventListener('resize', cometResize); cometResize();
+
+    const comets = [];
+    let prevX = null, prevY = null;
+
+    function spawnComet(x, y, dx, dy){
+      const speed = Math.hypot(dx, dy) || 1;
+      const vx = dx * 0.25;
+      const vy = dy * 0.25;
+      comets.push({
+        x, y, vx, vy,
+        life: 1,
+        size: Math.min(12, 6 + speed*0.02)  // faster move = bigger comet
+      });
+      if (comets.length > 120) comets.splice(0, comets.length - 120);
     }
-    btn.addEventListener('click', (e)=>{ e.preventDefault(); setOriginal(!document.body.classList.contains('original-on')); });
 
-    // keyboard shortcuts: → to Original, ← to Starry
-    document.addEventListener('keydown', (e)=>{
-      if(e.key==='ArrowRight') setOriginal(true);
-      if(e.key==='ArrowLeft')  setOriginal(false);
+    addEventListener('mousemove', (e)=>{
+      if(prevX==null){ prevX=e.clientX; prevY=e.clientY; }
+      const dx = e.clientX - prevX;
+      const dy = e.clientY - prevY;
+      spawnComet(e.clientX, e.clientY, dx, dy);
+      prevX = e.clientX; prevY = e.clientY;
     });
 
-    // start on starry
-    setOriginal(false);
+    function drawComet(c){
+      // head
+      cctx.beginPath();
+      cctx.arc(c.x, c.y, Math.max(2, c.size*0.35), 0, Math.PI*2);
+      cctx.fillStyle = `rgba(29,58,138, ${0.9 * c.life})`; // head
+      cctx.shadowColor = 'rgba(29,58,138,0.7)';
+      cctx.shadowBlur = 10;
+      cctx.fill();
+      cctx.shadowBlur = 0;
 
+      // tail (gradient opposite velocity)
+      const tx = c.x - c.vx * 6;
+      const ty = c.y - c.vy * 6;
+      const grad = cctx.createLinearGradient(c.x, c.y, tx, ty);
+      grad.addColorStop(0, `rgba(29,58,138, ${0.9 * c.life})`);
+      grad.addColorStop(1, `rgba(29,58,138, 0)`);
+      cctx.strokeStyle = grad;
+      cctx.lineWidth = Math.max(1.5, c.size * 0.6 * c.life);
+      cctx.lineCap = 'round';
+      cctx.beginPath();
+      cctx.moveTo(c.x, c.y);
+      cctx.lineTo(tx, ty);
+      cctx.stroke();
+    }
 
-/* --- Shooting-star cursor trail --- */
-let lastSpawn = 0, prevX = null, prevY = null;
+    function cometFrame(){
+      cctx.clearRect(0,0,cometCanvas.width,cometCanvas.height);
+      for(const c of comets){
+        c.x += c.vx; c.y += c.vy;
+        c.vx *= 0.92; c.vy *= 0.92;   // friction
+        c.size *= 0.98;
+        c.life *= 0.94;
+      }
+      for(const c of comets){ drawComet(c); }
+      // remove faded
+      for(let i=comets.length-1;i>=0;i--) if(comets[i].life < 0.06) comets.splice(i,1);
+      requestAnimationFrame(cometFrame);
+    }
+    cometFrame();
 
-function spawnComet(x, y, ang){
-  const comet = document.createElement('span');
-  comet.className = 'cursor-comet';
-  const dist = 90 + Math.random()*80;           // 90–170px tail
-  const dx = Math.cos(ang)*dist, dy = Math.sin(ang)*dist;
-  comet.style.left = x+'px'; comet.style.top = y+'px';
-  comet.style.setProperty('--rot', (ang*180/Math.PI)+'deg');
-  comet.style.setProperty('--dx', dx+'px'); comet.style.setProperty('--dy', dy+'px');
-  document.body.appendChild(comet);
-  comet.addEventListener('animationend', () => comet.remove());
-}
+    /* ========= Months + Days timer since Mar 30, 2025 ========= */
+    const START_DATE = new Date('2025-03-30T00:00:00');
 
-function handleMove(e){
-  const now = Date.now(), x = e.clientX, y = e.clientY;
-  if(now - lastSpawn < 28){ prevX = x; prevY = y; return; }   // throttle
-  const ang = (prevX==null||prevY==null) ? (Math.random()*40-20)*Math.PI/180
-                                         : Math.atan2(y - prevY, x - prevX);
-  spawnComet(x, y, ang);
-  lastSpawn = now; prevX = x; prevY = y;
-}
-window.addEventListener('pointermove', handleMove, {passive:true});
-  
-</script>
+    function daysInMonth(y, m){ return new Date(y, m+1, 0).getDate(); }
+    function addMonths(d, months){
+      const y = d.getFullYear(), m = d.getMonth(), day = d.getDate();
+      const targetM = m + months;
+      const nd = new Date(y, targetM, 1);
+      const last = daysInMonth(nd.getFullYear(), nd.getMonth());
+      nd.setDate(Math.min(day, last));
+      return nd;
+    }
+    function diffMonthsDays(from, to){
+      let months = (to.getFullYear()-from.getFullYear())*12 + (to.getMonth()-from.getMonth());
+      if (to.getDate() < from.getDate()) months -= 1;
+      const anchor = addMonths(from, months);
+      const days = Math.floor((to - anchor)/(24*60*60*1000));
+      return { months, days };
+    }
+    function updateTimer(){
+      const now = new Date();
+      const {months, days} = diffMonthsDays(START_DATE, now);
+      const m = Math.max(0, months), d = Math.max(0, days);
+      document.getElementById('timer').textContent =
+        `Together: ${m} month${m!==1?'s':''} • ${d} day${d!==1?'s':''}`;
+    }
+    updateTimer();
+    setInterval(updateTimer, 30*60*1000);
+  </script>
 </body>
 </html>
 
