@@ -3,290 +3,236 @@
 <head>
   <meta charset="utf-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
-  <title>HAPPY 9 MONTHS AMOR!!!</title>
+  <title>Happy 10 months amor!</title>
+
+  <!-- Pretty font -->
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital@0;1&display=swap" rel="stylesheet">
+
   <style>
     :root{
-      --bg:#f8f4e8;     /* cream */
-      --ink:#0d245f;    /* dark blue */
-      --comet:#1d3a8a;  /* comet blue */
+      --cream:#f8f4e8;
+      --dark-red:#7f1d1d;
+      --heart:#b91c1c;
     }
+
     *{box-sizing:border-box}
-    html,body{height:100%;margin:0}
+    html,body{
+      height:100%;
+      margin:0;
+    }
+
     body{
-      background:var(--bg);
-      color:var(--ink);
-      font-family:ui-rounded,system-ui,-apple-system,"Segoe UI",Arial,sans-serif;
-      overflow:hidden;             /* keep canvases inside */
-      cursor:none;                 /* hide default cursor */
-    }
-
-    /* canvases */
-    #sky{position:fixed; inset:0; z-index:0; pointer-events:none}
-    #cursor{position:fixed; inset:0; z-index:3; pointer-events:none}
-
-    /* header */
-    h1.header{
-      position:fixed; top:16px; left:50%; transform:translateX(-50%);
-      margin:0; z-index:2; text-align:center;
-      font-weight:800; letter-spacing:.5px;
-      font-size:clamp(1.6rem,5vw,2.6rem);
-      color:var(--ink);
-      text-shadow:0 1px 0 rgba(13,36,95,.08);
-      pointer-events:none;
-    }
-
-    /* perfectly centered video area */
-    main.page{
-      position:relative; z-index:1;
-      height:100vh;                      /* full viewport */
-      display:grid; place-items:center;  /* true center */
-      padding:0 4vw;
-    }
-    .video-frame{
-      width: min(88vw, 980px);
-      max-height: calc(100vh - 180px);   /* room for title + timer */
-      background: var(--bg);             /* cream letterbox */
-      border-radius:16px;
-      box-shadow:0 22px 48px rgba(0,0,0,.25);
-      outline:1px solid rgba(13,36,95,.15);
+      background:var(--cream);
+      font-family: system-ui, -apple-system, "Segoe UI", Arial, sans-serif;
+      color:var(--dark-red);
+      display:flex;
+      justify-content:center;
+      align-items:center;
+      text-align:center;
       overflow:hidden;
     }
-    video{
-      display:block;
-      width:100%;
-      height:auto;
-      max-height:inherit;                /* obey the frame cap */
-      object-fit: contain;               /* keep full video */
-      background: var(--bg);             /* cream letterbox inside video */
+
+    /* ===== FLOATING HEARTS BACKGROUND ===== */
+    #hearts{
+      position:fixed;
+      inset:0;
+      pointer-events:none;
+      z-index:0;
     }
 
-    /* bottom timer */
-    .timer-bar{
-      position:fixed; left:50%; bottom:12px; transform:translateX(-50%);
-      z-index:2; background:rgba(255,255,255,.78);
-      color:var(--ink); border:1px solid rgba(13,36,95,.18);
-      border-radius:999px; padding:.6rem 1rem;
-      backdrop-filter:blur(6px);
-      box-shadow:0 8px 20px rgba(0,0,0,.12);
-      font-weight:700; letter-spacing:.3px;
-      text-align:center;
-      white-space:nowrap;
+    .heart{
+      position:absolute;
+      color:var(--heart);
+      font-size:18px;
+      opacity:0.8;
+      animation:floatHeart linear infinite;
+    }
+
+    @keyframes floatHeart{
+      0%{ transform:translateY(110vh); opacity:0; }
+      20%{ opacity:0.9; }
+      100%{ transform:translateY(-10vh); opacity:0; }
+    }
+
+    /* ===== CURSOR HEART TRAIL ===== */
+    .trail-heart{
+      position:fixed;
+      pointer-events:none;
+      z-index:3;
+      font-size:14px;
+      color:var(--heart);
+      opacity:0.9;
+      animation:trailFade 0.8s ease-out forwards;
+    }
+
+    @keyframes trailFade{
+      to{
+        transform:translateY(-12px) scale(1.2);
+        opacity:0;
+      }
+    }
+
+    /* ===== MAIN CONTENT ===== */
+    .content{
+      position:relative;
+      z-index:2;
+      padding:24px;
+      max-width:720px;
+      display:flex;
+      flex-direction:column;
+      align-items:center;
+      gap:22px;
+    }
+
+    h1{
+      font-size:2.4rem;
+      letter-spacing:0.12em;
+      text-transform:uppercase;
+      margin:0;
+    }
+
+    /* ===== LOVE MESSAGE ===== */
+    .love-message{
+      font-family:"Playfair Display", serif;
+      color:#8b1c1c;
+      font-size:1.05rem;
+      line-height:1.7;
+      max-width:650px;
+      font-style:italic;
+    }
+
+    /* ===== VIDEO ===== */
+    .video-wrapper{
+      background:rgba(255,255,255,0.9);
+      padding:10px;
+      border-radius:18px;
+      box-shadow:0 18px 40px rgba(0,0,0,0.2);
+      max-width:480px;
+      width:100%;
+    }
+
+    video{
+      width:100%;
+      border-radius:12px;
+      display:block;
+      background:#000;
+    }
+
+    /* ===== TIMER CAPSULE ===== */
+    .timer-pill{
+      display:inline-flex;
+      align-items:center;
+      gap:10px;
+      padding:12px 22px;
+      border-radius:999px;
+      background:rgba(255,255,255,0.9);
+      border:2px solid rgba(127,29,29,0.35);
+      box-shadow:0 14px 30px rgba(0,0,0,0.12);
+      font-family:"Playfair Display", serif;
+      color:var(--dark-red);
+      letter-spacing:0.08em;
+      font-size:1.15rem;
+    }
+
+    .pill-heart{
+      font-size:1.1rem;
+    }
+
+    @media (max-width:600px){
+      h1{font-size:2rem}
+      .love-message{font-size:1rem}
     }
   </style>
 </head>
+
 <body>
-  <!-- background stars -->
-  <canvas id="sky"></canvas>
-  <!-- shooting-star cursor layer -->
-  <canvas id="cursor"></canvas>
 
-  <!-- title -->
-  <h1 class="header">HAPPY 9 MONTHS AMOR!!!</h1>
+  <!-- Floating hearts -->
+  <div id="hearts"></div>
 
-  <!-- centered video -->
-  <main class="page">
-    <div class="video-frame">
-      <video src="vileo.mp4" controls playsinline preload="metadata"></video>
+  <!-- Main content -->
+  <div class="content">
+    <h1>Happy 10 months amor!</h1>
+
+    <div class="love-message">
+      Happy 10 months my love!!! I always get so excited to update this page for you!
+      You deserve all the good things in this life. I can't wait to see what the future
+      holds for us! Thank you for being my best friend, my safe space, and someone I can
+      completely be myself with. I love you today, tomorrow, and always!
     </div>
-  </main>
 
-  <!-- months + days since Mar 30, 2025 -->
-  <div class="timer-bar" id="timer">Together: …</div>
+    <div class="video-wrapper">
+      <video src="viddeo.mp4" controls loop playsinline></video>
+    </div>
+
+    <!-- TIMER -->
+    <div class="timer-pill">
+      <span class="pill-heart">❤️</span>
+      <span id="timer"></span>
+      <span class="pill-heart">❤️</span>
+    </div>
+  </div>
 
   <script>
-    /* ========= BACKGROUND: real 5-point stars + tiny dots ========= */
-    const sky = document.getElementById('sky');
-    const sctx = sky.getContext('2d');
-
-    function skyResize(){
-      sky.width = innerWidth;
-      sky.height = innerHeight;
+    /* ===== FLOATING HEARTS ===== */
+    function spawnHeart(){
+      const heart = document.createElement("div");
+      heart.className = "heart";
+      heart.textContent = "❤️";
+      heart.style.left = Math.random() * 100 + "vw";
+      heart.style.fontSize = (14 + Math.random() * 22) + "px";
+      heart.style.animationDuration = (6 + Math.random() * 6) + "s";
+      document.getElementById("hearts").appendChild(heart);
+      setTimeout(() => heart.remove(), 12000);
     }
-    addEventListener('resize', skyResize); skyResize();
+    setInterval(spawnHeart, 700);
 
-    const DOT_COUNT  = Math.min(260, Math.floor((innerWidth*innerHeight)/6000));
-    const STAR_COUNT = Math.min(120, Math.floor((innerWidth*innerHeight)/15000));
+    /* ===== CURSOR HEART TRAIL ===== */
+    let lastTrail = 0;
+    document.addEventListener("mousemove", (e) => {
+      const now = Date.now();
+      if (now - lastTrail < 40) return;
+      lastTrail = now;
 
-    const dots = [];
-    const stars = [];
-    const rnd = (a,b)=> Math.random()*(b-a)+a;
-
-    function newDot(y = Math.random()*sky.height){
-      return {
-        x: Math.random()*sky.width,
-        y,
-        r: rnd(0.6, 1.6),
-        baseA: rnd(0.4, 0.9),
-        t: rnd(0, Math.PI*2), ts: rnd(0.003, 0.01),
-        vx: rnd(-0.05, 0.05), vy: rnd(0.04, 0.12)
-      };
-    }
-    function newStar(y = Math.random()*sky.height){
-      return {
-        x: Math.random()*sky.width, y,
-        R: rnd(5, 10), r: rnd(2, 4),
-        rot: rnd(0, Math.PI*2),
-        baseA: rnd(0.55, 0.95),
-        t: rnd(0, Math.PI*2), ts: rnd(0.002, 0.006),
-        vx: rnd(-0.04, 0.04), vy: rnd(0.04, 0.10)
-      };
-    }
-    for(let i=0;i<DOT_COUNT;i++)  dots.push(newDot());
-    for(let i=0;i<STAR_COUNT;i++) stars.push(newStar());
-
-    function drawFiveStar(ctx, x, y, R, r, rot){
-      ctx.save(); ctx.translate(x, y); ctx.rotate(rot);
-      ctx.beginPath();
-      for(let i=0;i<10;i++){
-        const ang = i * Math.PI/5;
-        const rad = (i % 2 === 0) ? R : r;
-        const px = Math.cos(ang) * rad;
-        const py = Math.sin(ang) * rad;
-        if(i===0) ctx.moveTo(px,py); else ctx.lineTo(px,py);
-      }
-      ctx.closePath(); ctx.fill(); ctx.restore();
-    }
-
-    function skyFrame(){
-      sctx.clearRect(0,0,sky.width,sky.height);
-
-      for(const d of dots){
-        d.x += d.vx; d.y += d.vy;
-        if(d.x < -5) d.x = sky.width+5;
-        if(d.x > sky.width+5) d.x = -5;
-        if(d.y > sky.height+5){ d.y = -5; d.x = Math.random()*sky.width; }
-
-        d.t += d.ts;
-        const tw = 0.5 + Math.sin(d.t)*0.5;
-        const a  = Math.max(0, Math.min(1, d.baseA*0.6 + tw*0.5));
-        sctx.beginPath();
-        sctx.arc(d.x, d.y, d.r + tw*0.4, 0, Math.PI*2);
-        sctx.fillStyle = `rgba(13,36,95,${a})`;
-        sctx.shadowColor = "rgba(13,36,95,0.35)";
-        sctx.shadowBlur = 2 + tw*2.5;
-        sctx.fill(); sctx.shadowBlur = 0;
-      }
-
-      for(const s of stars){
-        s.x += s.vx; s.y += s.vy;
-        if(s.x < -10) s.x = sky.width+10;
-        if(s.x > sky.width+10) s.x = -10;
-        if(s.y > sky.height+10){ s.y = -10; s.x = Math.random()*sky.width; }
-
-        s.t += s.ts; s.rot += 0.0008;
-        const tw = 0.5 + Math.sin(s.t)*0.5;
-        const a  = Math.max(0, Math.min(1, s.baseA*0.55 + tw*0.5));
-        const grow = 1 + tw*0.18;
-
-        sctx.fillStyle   = `rgba(13,36,95,${a})`;
-        sctx.shadowColor = "rgba(13,36,95,0.5)";
-        sctx.shadowBlur  = 5 + tw*6;
-        drawFiveStar(sctx, s.x, s.y, s.R*grow, s.r*grow, s.rot);
-        sctx.shadowBlur  = 0;
-      }
-
-      requestAnimationFrame(skyFrame);
-    }
-    skyFrame();
-
-    /* ========= SHOOTING-STAR CURSOR ========= */
-    const cometCanvas = document.getElementById('cursor');
-    const cctx = cometCanvas.getContext('2d');
-    function cometResize(){ cometCanvas.width = innerWidth; cometCanvas.height = innerHeight; }
-    addEventListener('resize', cometResize); cometResize();
-
-    const comets = [];
-    let prevX = null, prevY = null;
-
-    function spawnComet(x, y, dx, dy){
-      const speed = Math.hypot(dx, dy) || 1;
-      const vx = dx * 0.25;
-      const vy = dy * 0.25;
-      comets.push({
-        x, y, vx, vy,
-        life: 1,
-        size: Math.min(12, 6 + speed*0.02)  // faster move = bigger comet
-      });
-      if (comets.length > 120) comets.splice(0, comets.length - 120);
-    }
-
-    addEventListener('mousemove', (e)=>{
-      if(prevX==null){ prevX=e.clientX; prevY=e.clientY; }
-      const dx = e.clientX - prevX;
-      const dy = e.clientY - prevY;
-      spawnComet(e.clientX, e.clientY, dx, dy);
-      prevX = e.clientX; prevY = e.clientY;
+      const h = document.createElement("div");
+      h.className = "trail-heart";
+      h.textContent = "❤️";
+      h.style.left = (e.clientX + 6) + "px";
+      h.style.top  = (e.clientY + 6) + "px";
+      document.body.appendChild(h);
+      setTimeout(() => h.remove(), 900);
     });
 
-    function drawComet(c){
-      // head
-      cctx.beginPath();
-      cctx.arc(c.x, c.y, Math.max(2, c.size*0.35), 0, Math.PI*2);
-      cctx.fillStyle = `rgba(29,58,138, ${0.9 * c.life})`; // head
-      cctx.shadowColor = 'rgba(29,58,138,0.7)';
-      cctx.shadowBlur = 10;
-      cctx.fill();
-      cctx.shadowBlur = 0;
+    /* ===== MONTHS + DAYS TIMER ===== */
+    const startDate = new Date("2025-03-30T00:00:00");
 
-      // tail (gradient opposite velocity)
-      const tx = c.x - c.vx * 6;
-      const ty = c.y - c.vy * 6;
-      const grad = cctx.createLinearGradient(c.x, c.y, tx, ty);
-      grad.addColorStop(0, `rgba(29,58,138, ${0.9 * c.life})`);
-      grad.addColorStop(1, `rgba(29,58,138, 0)`);
-      cctx.strokeStyle = grad;
-      cctx.lineWidth = Math.max(1.5, c.size * 0.6 * c.life);
-      cctx.lineCap = 'round';
-      cctx.beginPath();
-      cctx.moveTo(c.x, c.y);
-      cctx.lineTo(tx, ty);
-      cctx.stroke();
-    }
-
-    function cometFrame(){
-      cctx.clearRect(0,0,cometCanvas.width,cometCanvas.height);
-      for(const c of comets){
-        c.x += c.vx; c.y += c.vy;
-        c.vx *= 0.92; c.vy *= 0.92;   // friction
-        c.size *= 0.98;
-        c.life *= 0.94;
-      }
-      for(const c of comets){ drawComet(c); }
-      // remove faded
-      for(let i=comets.length-1;i>=0;i--) if(comets[i].life < 0.06) comets.splice(i,1);
-      requestAnimationFrame(cometFrame);
-    }
-    cometFrame();
-
-    /* ========= Months + Days timer since Mar 30, 2025 ========= */
-    const START_DATE = new Date('2025-03-30T00:00:00');
-
-    function daysInMonth(y, m){ return new Date(y, m+1, 0).getDate(); }
-    function addMonths(d, months){
-      const y = d.getFullYear(), m = d.getMonth(), day = d.getDate();
-      const targetM = m + months;
-      const nd = new Date(y, targetM, 1);
-      const last = daysInMonth(nd.getFullYear(), nd.getMonth());
-      nd.setDate(Math.min(day, last));
-      return nd;
-    }
-    function diffMonthsDays(from, to){
-      let months = (to.getFullYear()-from.getFullYear())*12 + (to.getMonth()-from.getMonth());
-      if (to.getDate() < from.getDate()) months -= 1;
-      const anchor = addMonths(from, months);
-      const days = Math.floor((to - anchor)/(24*60*60*1000));
-      return { months, days };
-    }
     function updateTimer(){
       const now = new Date();
-      const {months, days} = diffMonthsDays(START_DATE, now);
-      const m = Math.max(0, months), d = Math.max(0, days);
-      document.getElementById('timer').textContent =
-        `Together: ${m} month${m!==1?'s':''} • ${d} day${d!==1?'s':''}`;
+      let years = now.getFullYear() - startDate.getFullYear();
+      let months = now.getMonth() - startDate.getMonth();
+      let days = now.getDate() - startDate.getDate();
+
+      if (days < 0) {
+        months--;
+        const prevMonthDays = new Date(now.getFullYear(), now.getMonth(), 0).getDate();
+        days += prevMonthDays;
+      }
+
+      if (months < 0) {
+        years--;
+        months += 12;
+      }
+
+      months += years * 12;
+
+      document.getElementById("timer").textContent =
+        `${months} months ${days} days together`;
     }
+
     updateTimer();
-    setInterval(updateTimer, 30*60*1000);
+    setInterval(updateTimer, 3600000);
   </script>
+
 </body>
 </html>
 
