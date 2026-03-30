@@ -1,238 +1,121 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="utf-8"/>
-  <meta name="viewport" content="width=device-width, initial-scale=1"/>
-  <title>Happy 10 months amor!</title>
-
-  <!-- Pretty font -->
-  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital@0;1&display=swap" rel="stylesheet">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Happy One Year</title>
 
   <style>
-    :root{
-      --cream:#f8f4e8;
-      --dark-red:#7f1d1d;
-      --heart:#b91c1c;
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
     }
 
-    *{box-sizing:border-box}
-    html,body{
-      height:100%;
-      margin:0;
+    body {
+      overflow: hidden;
+      font-family: Georgia, "Times New Roman", serif;
     }
 
-    body{
-      background:var(--cream);
-      font-family: system-ui, -apple-system, "Segoe UI", Arial, sans-serif;
-      color:var(--dark-red);
-      display:flex;
-      justify-content:center;
-      align-items:center;
-      text-align:center;
-      overflow:hidden;
+    .screen {
+      width: 100%;
+      height: 100vh;
+      display: none;
+      position: relative;
     }
 
-    /* ===== FLOATING HEARTS BACKGROUND ===== */
-    #hearts{
-      position:fixed;
-      inset:0;
-      pointer-events:none;
-      z-index:0;
+    .active {
+      display: flex;
     }
 
-    .heart{
-      position:absolute;
-      color:var(--heart);
-      font-size:18px;
-      opacity:0.8;
-      animation:floatHeart linear infinite;
+    /* 🌲 FIRST PAGE */
+    .intro-screen {
+      background: url('bg.png') no-repeat center center/cover;
+      justify-content: center;
+      align-items: center;
     }
 
-    @keyframes floatHeart{
-      0%{ transform:translateY(110vh); opacity:0; }
-      20%{ opacity:0.9; }
-      100%{ transform:translateY(-10vh); opacity:0; }
+    .intro-overlay {
+      margin-top: 140px;
+      background: rgba(140, 20, 20, 0.9);
+      color: #fff8f0;
+      padding: 26px 40px;
+      border-radius: 6px;
+      font-size: 2rem;
+      font-family: "Courier New", monospace;
+      cursor: pointer;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+      letter-spacing: 2px;
     }
 
-    /* ===== CURSOR HEART TRAIL ===== */
-    .trail-heart{
-      position:fixed;
-      pointer-events:none;
-      z-index:3;
-      font-size:14px;
-      color:var(--heart);
-      opacity:0.9;
-      animation:trailFade 0.8s ease-out forwards;
+    /* 🤍 SECOND PAGE */
+    .main-screen {
+      background: #f8f3ea;
+      justify-content: center;
+      align-items: center;
     }
 
-    @keyframes trailFade{
-      to{
-        transform:translateY(-12px) scale(1.2);
-        opacity:0;
-      }
+    /* floating hearts */
+    .heart {
+      position: absolute;
+      bottom: -40px;
+      color: #b3202e;
+      opacity: 0.15;
+      animation: floatUp linear infinite;
     }
 
-    /* ===== MAIN CONTENT ===== */
-    .content{
-      position:relative;
-      z-index:2;
-      padding:24px;
-      max-width:720px;
-      display:flex;
-      flex-direction:column;
-      align-items:center;
-      gap:22px;
+    @keyframes floatUp {
+      0% {transform: translateY(0); opacity: 0;}
+      10% {opacity: 0.2;}
+      100% {transform: translateY(-120vh); opacity: 0;}
     }
 
-    h1{
-      font-size:2.4rem;
-      letter-spacing:0.12em;
-      text-transform:uppercase;
-      margin:0;
-    }
-
-    /* ===== LOVE MESSAGE ===== */
-    .love-message{
-      font-family:"Playfair Display", serif;
-      color:#8b1c1c;
-      font-size:1.05rem;
-      line-height:1.7;
-      max-width:650px;
-      font-style:italic;
-    }
-
-    /* ===== VIDEO ===== */
-    .video-wrapper{
-      background:rgba(255,255,255,0.9);
-      padding:10px;
-      border-radius:18px;
-      box-shadow:0 18px 40px rgba(0,0,0,0.2);
-      max-width:480px;
-      width:100%;
-    }
-
-    video{
-      width:100%;
-      border-radius:12px;
-      display:block;
-      background:#000;
-    }
-
-    /* ===== TIMER CAPSULE ===== */
-    .timer-pill{
-      display:inline-flex;
-      align-items:center;
-      gap:10px;
-      padding:12px 22px;
-      border-radius:999px;
-      background:rgba(255,255,255,0.9);
-      border:2px solid rgba(127,29,29,0.35);
-      box-shadow:0 14px 30px rgba(0,0,0,0.12);
-      font-family:"Playfair Display", serif;
-      color:var(--dark-red);
-      letter-spacing:0.08em;
-      font-size:1.15rem;
-    }
-
-    .pill-heart{
-      font-size:1.1rem;
-    }
-
-    @media (max-width:600px){
-      h1{font-size:2rem}
-      .love-message{font-size:1rem}
+    /* 🎬 video */
+    .full-video {
+      width: 100vw;
+      height: 100vh;
+      object-fit: cover;
     }
   </style>
 </head>
 
 <body>
 
-  <!-- Floating hearts -->
-  <div id="hearts"></div>
+  <!-- intro -->
+  <div class="screen intro-screen active" id="introScreen">
+    <div class="intro-overlay" onclick="openMainPage()">click me</div>
+  </div>
 
-  <!-- Main content -->
-  <div class="content">
-    <h1>Happy 10 months amor!</h1>
-
-    <div class="love-message">
-      Happy 10 months my love!!! I always get so excited to update this page for you!
-      You deserve all the good things in this life. I can't wait to see what the future
-      holds for us! Thank you for being my best friend, my safe space, and someone I can
-      completely be myself with. I love you today, tomorrow, and always!
-    </div>
-
-    <div class="video-wrapper">
-      <video src="viddeo.mp4" controls loop playsinline></video>
-    </div>
-
-    <!-- TIMER -->
-    <div class="timer-pill">
-      <span class="pill-heart">❤️</span>
-      <span id="timer"></span>
-      <span class="pill-heart">❤️</span>
-    </div>
+  <!-- main -->
+  <div class="screen main-screen" id="mainScreen">
+    <video id="myVideo" loop controls class="full-video">
+      <source src="love.mp4" type="video/mp4">
+    </video>
   </div>
 
   <script>
-    /* ===== FLOATING HEARTS ===== */
-    function spawnHeart(){
+    function openMainPage() {
+      document.getElementById("introScreen").classList.remove("active");
+      document.getElementById("mainScreen").classList.add("active");
+
+      const video = document.getElementById("myVideo");
+      video.play();
+    }
+
+    function createHeart() {
       const heart = document.createElement("div");
-      heart.className = "heart";
-      heart.textContent = "❤️";
+      heart.classList.add("heart");
+      heart.innerHTML = "♥";
       heart.style.left = Math.random() * 100 + "vw";
-      heart.style.fontSize = (14 + Math.random() * 22) + "px";
+      heart.style.fontSize = (18 + Math.random() * 30) + "px";
       heart.style.animationDuration = (6 + Math.random() * 6) + "s";
-      document.getElementById("hearts").appendChild(heart);
+      document.body.appendChild(heart);
+
       setTimeout(() => heart.remove(), 12000);
     }
-    setInterval(spawnHeart, 700);
 
-    /* ===== CURSOR HEART TRAIL ===== */
-    let lastTrail = 0;
-    document.addEventListener("mousemove", (e) => {
-      const now = Date.now();
-      if (now - lastTrail < 40) return;
-      lastTrail = now;
-
-      const h = document.createElement("div");
-      h.className = "trail-heart";
-      h.textContent = "❤️";
-      h.style.left = (e.clientX + 6) + "px";
-      h.style.top  = (e.clientY + 6) + "px";
-      document.body.appendChild(h);
-      setTimeout(() => h.remove(), 900);
-    });
-
-    /* ===== MONTHS + DAYS TIMER ===== */
-    const startDate = new Date("2025-03-30T00:00:00");
-
-    function updateTimer(){
-      const now = new Date();
-      let years = now.getFullYear() - startDate.getFullYear();
-      let months = now.getMonth() - startDate.getMonth();
-      let days = now.getDate() - startDate.getDate();
-
-      if (days < 0) {
-        months--;
-        const prevMonthDays = new Date(now.getFullYear(), now.getMonth(), 0).getDate();
-        days += prevMonthDays;
-      }
-
-      if (months < 0) {
-        years--;
-        months += 12;
-      }
-
-      months += years * 12;
-
-      document.getElementById("timer").textContent =
-        `${months} months ${days} days together`;
-    }
-
-    updateTimer();
-    setInterval(updateTimer, 3600000);
+    setInterval(createHeart, 400);
   </script>
 
 </body>
 </html>
-
